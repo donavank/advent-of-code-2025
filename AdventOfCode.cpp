@@ -367,17 +367,9 @@ int findAccessiblePaperRolls1() {
 		for (size_t j = 0; j < paperGrid[i].size(); ++j) {
 			if (paperGrid[i][j] == '@' && countNeighbors(paperGrid, i, j) < 4) {
 				++accessibleRolls;
-				std::stringstream stream;
-				stream << i << ',' << j;
-				std::string s;
-				stream >> s;
-				accessibleLocations.push_back(s);
 			}
 		}
 	}
-	//for (auto location : accessibleLocations) {
-	//	std::cout << location << '\n';
-	//}
 	return accessibleRolls;
 }
 
@@ -398,7 +390,9 @@ int findAccessiblePaperRolls2() {
 	int accessibleRolls{ 0 };
 	int rollsLeft{ 0 };
 	bool removedOne = false;
-	std::vector<std::string> accessibleLocations;
+	// This could probably be improved by backtracking the moment we remove a roll. 
+	// Or checking up, left, up-left, up-right neighbors every time one is removed
+	// I have not done the math on this though.
 	do {
 		removedOne = false;
 		for (size_t i = 0; i < paperGrid.size(); ++i) {
