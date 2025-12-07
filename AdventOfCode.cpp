@@ -346,3 +346,104 @@ long long maximizeJoltages2() {
 	}
 	return joltageSum;
 }
+
+int findAccessiblePaperRolls1() {
+	std::ifstream paperRollsFile{ "paper-rolls.txt" };
+
+	std::string row;
+	std::vector<std::vector<char>> paperGrid;
+
+	while (paperRollsFile >> row) {
+		std::vector<char> gridRow;
+		for (char c : row) {
+			gridRow.push_back(c);
+		}
+		paperGrid.push_back(gridRow);
+	}
+
+	int accessibleRolls{ 0 };
+	std::vector<std::string> accessibleLocations;
+	for (size_t i = 0; i < paperGrid.size(); ++i) {
+		for (size_t j = 0; j < paperGrid[i].size(); ++j) {
+			if (paperGrid[i][j] == '@' && countNeighbors(paperGrid, i, j) < 4) {
+				++accessibleRolls;
+				std::stringstream stream;
+				stream << i << ',' << j;
+				std::string s;
+				stream >> s;
+				accessibleLocations.push_back(s);
+			}
+		}
+	}
+	//for (auto location : accessibleLocations) {
+	//	std::cout << location << '\n';
+	//}
+	return accessibleRolls;
+}
+
+int findAccessiblePaperRolls2() {
+	std::ifstream paperRollsFile{ "paper-rolls.txt" };
+
+	std::string row;
+	std::vector<std::vector<char>> paperGrid;
+
+	while (paperRollsFile >> row) {
+		std::vector<char> gridRow;
+		for (char c : row) {
+			gridRow.push_back(c);
+		}
+		paperGrid.push_back(gridRow);
+	}
+
+	int accessibleRolls{ 0 };
+	int rollsLeft{ 0 };
+	bool removedOne = false;
+	std::vector<std::string> accessibleLocations;
+	do {
+		removedOne = false;
+		for (size_t i = 0; i < paperGrid.size(); ++i) {
+			for (size_t j = 0; j < paperGrid[i].size(); ++j) {
+				if (paperGrid[i][j] == '@') {
+					++rollsLeft;
+					if (countNeighbors(paperGrid, i, j) < 4) {
+						++accessibleRolls;
+						--rollsLeft;
+						removedOne = true;
+						paperGrid[i][j] = '.';
+					}
+				}
+			}
+		}
+	} while (rollsLeft > 0 && removedOne);
+
+	return accessibleRolls;
+}
+
+static bool isInBounds(size_t row, size_t column, size_t rowCount, size_t columnCount) {
+	return row >= 0 && column >= 0 && row < rowCount && column < columnCount;
+}
+
+int countNeighbors(std::vector<std::vector<char>> grid, size_t row, size_t column) {
+	size_t rowCount = grid.size();
+	size_t columnCount = grid.front().size();
+
+	int neighbors{ 0 };
+
+	// Check adjacent positions
+	for (int i = -1; i <= 1; ++i) {
+		size_t neighborRow = row + i;
+		for (int j = -1; j <= 1; ++j) {
+			// Don't count target position
+			if (j == 0 && i == 0) {
+				continue;
+			}
+
+			size_t neighborColumn = column + j;
+			if (isInBounds(neighborRow, neighborColumn, rowCount, columnCount) && grid[neighborRow][neighborColumn] == '@') {
+				++neighbors;
+			}
+		}
+	}
+
+	return neighbors;
+}

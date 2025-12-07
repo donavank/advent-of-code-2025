@@ -62,4 +62,18 @@ int maximizeJoltages1();
 /// <returns>maximized joltage for the given set of batteries</returns>
 long long maximizeJoltages2();
 
+/// <summary>
+/// Examines the paper roll grid to look for rolls that are accessible.
+/// </summary>
+/// <returns>Total number of paper rolls that are forklift accessible.</returns>
+int findAccessiblePaperRolls1();
+
+/// <summary>
+/// Basically does the same as 1 but repeats until no rolls are accessible or there are none left
+/// </summary>
+/// <returns>Total number of paper rolls that are forklift accessible.</returns>
+int findAccessiblePaperRolls2();
+
+int countNeighbors(std::vector<std::vector<char>> grid, size_t row, size_t column);
+
 

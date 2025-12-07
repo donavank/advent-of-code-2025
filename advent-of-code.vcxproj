@@ -142,6 +142,8 @@
   <ItemGroup>
     <Text Include="batteries-test.txt" />
     <Text Include="batteries.txt" />
+    <Text Include="paper-rolls-test.txt" />
+    <Text Include="paper-rolls.txt" />
     <Text Include="product-id-ranges-test.txt" />
     <Text Include="product-id-ranges.txt" />
     <Text Include="rotations-test.txt" />
