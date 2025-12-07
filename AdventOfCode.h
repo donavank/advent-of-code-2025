@@ -55,4 +55,11 @@ static int isInvalidId2(long long id);
 /// <returns>maximized joltage for the given set of batteries</returns>
 int maximizeJoltages1();
 
+/// <summary>
+/// Calculates the maximum joltages by summing the joltages available for a setting of batteries. A battery's joltage is determined by 
+/// turning on 12 digits in the battery's line.
+/// </summary>
+/// <returns>maximized joltage for the given set of batteries</returns>
+long long maximizeJoltages2();
+
 

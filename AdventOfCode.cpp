@@ -257,11 +257,92 @@ static int isInvalidId2(long long id) {
 }
 
 int maximizeJoltages1() {
-	std::ifstream batteriesFile{ "joltages-test.txt" };
+	std::ifstream batteriesFile{ "batteries.txt" };
 
 	std::string battery;
 
+	int joltageSum{ 0 };
+
 	while (batteriesFile >> battery) {
+		int firstDigit{ -1 };
+		int secondDigit{ -1 };
+
+		for (char c : battery.substr(0, battery.length()-1)) {
+			int digit = atoi(&c);
+			if (digit > firstDigit) {
+				secondDigit = -1;
+				firstDigit = digit;
+			}
+			else if (digit > secondDigit) {
+				secondDigit = digit;
+			}
+		}
+
+		int lastDigit{ atoi(&battery[battery.length() - 1]) };
+		if (secondDigit < lastDigit) {
+			secondDigit = lastDigit;
+		}
+
+		joltageSum += (firstDigit * 10) + secondDigit;
 	}
-	return 0;
+	return joltageSum;
+}
+
+void printDigits(int digits[]) {
+	std::stringstream ss;
+	for (int i = 0; i < sizeof(digits); ++i) {
+		ss << digits[i];
+	}
+	std::string s;
+	ss >> s;
+	std::cout << "Digits: " << s << "\n";
+}
+
+long long maximizeJoltages2() {
+	std::ifstream batteriesFile{ "batteries.txt" };
+
+	std::string battery;
+
+	long long joltageSum{ 0 };
+	const int digitsLength{ 12 };
+	while (batteriesFile >> battery) {
+		int digits[digitsLength];
+
+		for (int i = 0; i < digitsLength; ++i) {
+			digits[i] = -1;
+		}
+
+		for (size_t i = 0; i < battery.length(); ++i) {
+			char c = battery[i];
+			int digit = atoi(&c);
+			bool wasDigitSet = false;
+			// Start wherever there is enough leftover in the batteries to fill out the digits (if need-be)
+			size_t digitsStart = battery.length() - i;
+			digitsStart = digitsStart < digitsLength ? digitsLength - digitsStart : 0;
+
+			//std::cout << "Char: " << c << "\n";
+			//printDigits(digits);
+			//std::cout << "Digits Start: " << digitsStart << "\n";
+			for (size_t j = digitsStart; j < digitsLength; ++j) {
+				if (wasDigitSet) {
+					digits[j] = -1;
+				}
+				else if (digit > digits[j]) {
+					digits[j] = digit;
+					wasDigitSet = true;
+				}
+			}
+		}
+
+		std::stringstream sumStream;
+		for (int i = 0; i < digitsLength; ++i) {
+			sumStream << digits[i];
+		}
+
+		std::string sumString;
+		sumStream >> sumString;
+		//std::cout << sumString << "\n";
+		joltageSum += atoll(sumString.c_str());
+	}
+	return joltageSum;
 }
