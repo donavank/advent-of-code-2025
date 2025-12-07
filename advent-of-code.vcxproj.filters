@@ -28,7 +28,19 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="rotations.txt.test">
+    <Text Include="rotations-test.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="product-id-ranges.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="product-id-ranges-test.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="batteries.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="batteries-test.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

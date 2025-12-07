@@ -7,7 +7,9 @@
 // Run a challenge by calling the appropriate method in AdventOfCode
 int main()
 {
-    std::cout << "--- Day 1: Secret Entrance ---\n" << "Part 1\n" << secretEntrance1() << '\n' << secretEntrance2();
+    std::cout << "--- Day 1: Secret Entrance ---\n" << "Part 1\n" << secretEntrance1() << "\nPart 2\n" << secretEntrance2() << "\n\n";
+    std::cout << "--- Day 2: Gift Shop ---\n" << "Part 1\n" << validateIds1() << "\nPart 2\n" << validateIds2() << '\n\n';
+    std::cout << "--- Day 3: Lobby ---\n" << "Part 1\n" << maximizeJoltages1() << "\nPart 2\n" << 0 << '\n\n';
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

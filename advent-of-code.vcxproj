@@ -140,7 +140,11 @@
     <ClInclude Include="AdventOfCode.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="rotations.txt.test" />
+    <Text Include="batteries-test.txt" />
+    <Text Include="batteries.txt" />
+    <Text Include="product-id-ranges-test.txt" />
+    <Text Include="product-id-ranges.txt" />
+    <Text Include="rotations-test.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
