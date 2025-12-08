@@ -10,7 +10,8 @@ int main()
     //std::cout << "--- Day 1: Secret Entrance ---\n" << "Part 1\n" << secretEntrance1() << "\nPart 2\n" << secretEntrance2() << "\n\n";
     //std::cout << "--- Day 2: Gift Shop ---\n" << "Part 1\n" << validateIds1() << "\nPart 2\n" << validateIds2() << "\n\n";
     //std::cout << "--- Day 3: Lobby ---\n" << "Part 1\n" << maximizeJoltages1() << "\nPart 2\n" << maximizeJoltages2() << "\n\n";
-    std::cout << "--- Day 4: Printing Department ---\n" << "Part 1\n" << findAccessiblePaperRolls1() << "\nPart 2\n" << findAccessiblePaperRolls2() << "\n\n";
+    //std::cout << "--- Day 4: Printing Department ---\n" << "Part 1\n" << findAccessiblePaperRolls1() << "\nPart 2\n" << findAccessiblePaperRolls2() << "\n\n";
+    std::cout << "--- Day 5: Cafeteria ---\n" << "Part 1\n" << findFreshIngredients1() << "\nPart 2\n" << findFreshIngredients2() << "\n\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

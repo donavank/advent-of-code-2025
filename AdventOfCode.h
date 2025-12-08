@@ -76,4 +76,13 @@ int findAccessiblePaperRolls2();
 
 int countNeighbors(std::vector<std::vector<char>> grid, size_t row, size_t column);
 
+/// <summary>
+/// Returns the total number of fresh ingredients given a set of ranges and set of available ingredient ids.
+/// </summary>
+/// <returns>the number of ingredient ids that are fresh according to the ranges</returns>
+int findFreshIngredients1();
+
+long long findFreshIngredients2();
+
+
 

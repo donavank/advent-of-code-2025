@@ -165,8 +165,8 @@ long long validateIds2() {
 }
 
 static std::vector<long long> getInvalidIdsInRange(std::string start, std::string end) {
-	long long startValue{ atoll(start.c_str()) };
-	long long endValue{ atoll(end.c_str()) };
+	long long startValue{ std::atoll(start.c_str()) };
+	long long endValue{ std::atoll(end.c_str()) };
 	//std::cout << "Start Value: " << startValue << '\n';
 	//std::cout << "End Value: " << endValue << '\n';
 	std::vector<long long> invalidIds{};
@@ -268,7 +268,7 @@ int maximizeJoltages1() {
 		int secondDigit{ -1 };
 
 		for (char c : battery.substr(0, battery.length()-1)) {
-			int digit = atoi(&c);
+			int digit = std::atoi(&c);
 			if (digit > firstDigit) {
 				secondDigit = -1;
 				firstDigit = digit;
@@ -278,7 +278,7 @@ int maximizeJoltages1() {
 			}
 		}
 
-		int lastDigit{ atoi(&battery[battery.length() - 1]) };
+		int lastDigit{ std::atoi(&battery[battery.length() - 1]) };
 		if (secondDigit < lastDigit) {
 			secondDigit = lastDigit;
 		}
@@ -314,7 +314,7 @@ long long maximizeJoltages2() {
 
 		for (size_t i = 0; i < battery.length(); ++i) {
 			char c = battery[i];
-			int digit = atoi(&c);
+			int digit = std::atoi(&c);
 			bool wasDigitSet = false;
 			// Start wherever there is enough leftover in the batteries to fill out the digits (if need-be)
 			size_t digitsStart = battery.length() - i;
@@ -342,7 +342,7 @@ long long maximizeJoltages2() {
 		std::string sumString;
 		sumStream >> sumString;
 		//std::cout << sumString << "\n";
-		joltageSum += atoll(sumString.c_str());
+		joltageSum += std::atoll(sumString.c_str());
 	}
 	return joltageSum;
 }
@@ -440,4 +440,110 @@ int countNeighbors(std::vector<std::vector<char>> grid, size_t row, size_t colum
 	}
 
 	return neighbors;
+}
+
+int findFreshIngredients1() {
+	std::ifstream ingredientsFile{ "ingredients.txt" };
+
+	std::string range;
+	std::vector<long long> rangeStarts;
+	std::vector<long long> rangeEnds;
+
+	while (std::getline(ingredientsFile, range) && !range.empty()) {
+		auto splitter{ range.find_first_of('-') };
+		// Start of range is up to '-'
+		long long start{ std::atoll(range.substr(0, splitter).c_str()) };
+		// End of range starts after '-'
+		long long end{ std::atoll(range.substr(splitter + 1, range.length()).c_str()) };
+
+		rangeStarts.push_back(start);
+		rangeEnds.push_back(end);
+	}
+
+	std::string idString;
+	int freshIngredientsCount{ 0 };
+
+	while (ingredientsFile >> idString) {
+		long long id{ std::atoll(idString.c_str()) };
+		bool isFresh{ false };
+		for (size_t i = 0; i < rangeStarts.size(); ++i) {
+			if (id >= rangeStarts[i] && id <= rangeEnds[i]) {
+				isFresh = true;
+				break;
+			}
+		}
+
+		if (isFresh) {
+			++freshIngredientsCount;
+		}
+	}
+	return freshIngredientsCount;
+}
+
+struct RangePoint {
+	long long start;
+	long long end;
+};
+
+long long findFreshIngredients2() {
+	std::ifstream ingredientsFile{ "ingredients.txt" };
+
+	std::string range;
+	std::vector<RangePoint> rangePoints;
+
+	while (std::getline(ingredientsFile, range) && !range.empty()) {
+		auto splitter{ range.find_first_of('-') };
+		// Start of range is up to '-'
+		long long start{ std::atoll(range.substr(0, splitter).c_str()) };
+		// End of range starts after '-'
+		long long end{ std::atoll(range.substr(splitter + 1, range.length()).c_str()) };
+
+
+		bool isNewRange{ true };
+		// Check whether this range falls in any other range
+		// Adjust this point's start and end to not overlap with existing ranges.
+		for (size_t i = 0; i < rangePoints.size(); ++i) {
+			RangePoint point = rangePoints[i];
+
+			// Disregard points like this because we have determined they are covered by another range.
+			if (point.start > point.end) {
+				continue;
+			}
+
+			// this range completely covers one that was already read
+			// Because this range no longer needs to be considered, we assign it values
+			// that let us know to ignore it when summing by making start > end. 
+			// I believe that 
+			if (start <= point.start && end >= point.end) { 
+				// Have to access vector directly because apparently the struct is being copied otherwise.
+				rangePoints[i].start = point.end + 1;
+				rangePoints[i].end = point.start;
+			}
+			// this range completely falls within an existing range
+			else if (start >= point.start && end <= point.end) {
+				isNewRange = false;
+			}
+			// bottom part of new range falls within existing range
+			else if (start <= point.end && end > point.end) {
+				start = point.end + 1;
+			} 
+			// top part of new range falls within existing range
+			else if (end >= point.start && start < point.start) {
+				end = point.start - 1;
+			}
+		}
+
+		if (isNewRange && start <= end) {
+			RangePoint newRange{ start, end };
+			rangePoints.push_back(newRange);
+		}
+	}
+
+	long long totalFreshIngredients{ 0 };
+	for (RangePoint rangePoint : rangePoints) {
+		if (!(rangePoint.start > rangePoint.end)) {
+			totalFreshIngredients += rangePoint.end - rangePoint.start + 1; // range is inclusive, so add 1
+		}
+	}
+	return totalFreshIngredients;
 }

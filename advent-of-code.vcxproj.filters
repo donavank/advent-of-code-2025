@@ -49,6 +49,12 @@
     <Text Include="paper-rolls.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="ingredients-test.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="ingredients.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="rotations.txt">
