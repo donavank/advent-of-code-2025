@@ -547,3 +547,62 @@ long long findFreshIngredients2() {
 	}
 	return totalFreshIngredients;
 }
+
+long long doMathWorksheet1() {
+	std::ifstream mathFile{ "math-problems.txt" };
+
+	std::string line;
+	std::vector<std::vector<long long>> rows;
+	std::vector<std::string> operators;
+
+	// For splitting input
+	std::regex whiteSpaceDelimiter{ "\\s+" };
+
+	// Read file until we get to the operands row
+	while (std::getline(mathFile, line)) {
+		// Split the input 
+		std::sregex_token_iterator inputIterator{ line.begin(), line.end(), whiteSpaceDelimiter, -1 };
+		std::vector<std::string> numberStrings{ inputIterator, {} };
+		std::vector<long long> row;
+
+		if ((line.c_str()[0] == '*') || (line.c_str()[0] == '+')) {
+			operators.insert(operators.begin(), numberStrings.begin(), numberStrings.end());
+		}
+		else {
+			for (std::string numString : numberStrings) {
+				// Ignore spaces at the start of a line
+				if (numString == "") {
+					continue;
+				}
+				row.push_back(std::atoll(numString.c_str()));
+			}
+			rows.push_back(row);
+		}
+	}
+
+	long long total{ 0 };
+
+	for (size_t column = 0; column < operators.size(); ++column) {
+		long long accumulator{ 0 };
+		std::string op = operators[column];
+
+		if (op == "*") {
+			accumulator = 1;
+		}
+		for (auto row : rows) {
+			if (op == "*") {
+				accumulator *= row[column];
+			}
+			else if (op == "+") {
+				accumulator += row[column];
+			}
+		}
+		total += accumulator;
+	}
+
+	return total;
+}
+
+long long doMathWorksheet2() {
+	return 0LL;
+}

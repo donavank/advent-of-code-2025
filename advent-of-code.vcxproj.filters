@@ -55,6 +55,12 @@
     <Text Include="ingredients.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="Resource Files\math-problems-test.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="math-problems.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="rotations.txt">

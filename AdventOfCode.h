@@ -82,7 +82,13 @@ int countNeighbors(std::vector<std::vector<char>> grid, size_t row, size_t colum
 /// <returns>the number of ingredient ids that are fresh according to the ranges</returns>
 int findFreshIngredients1();
 
+/// <summary>
+/// Returns the total possible number of fresh ingredients given a set of ranges.
+/// </summary>
+/// <returns>the number of ingredient ids that are fresh according to the ranges</returns>
 long long findFreshIngredients2();
 
+long long doMathWorksheet1();
 
+long long doMathWorksheet2();
 
