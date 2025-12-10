@@ -604,5 +604,50 @@ long long doMathWorksheet1() {
 }
 
 long long doMathWorksheet2() {
-	return 0LL;
+	std::ifstream mathFile{ "math-problems.txt" };
+
+	std::string line;
+	std::vector<std::string> lines;
+
+
+	// Read file until we get to the operands row
+	while (std::getline(mathFile, line)) {
+		lines.push_back(line);
+	}
+
+	std::string operatorLine = lines[lines.size() - 1];
+	lines.pop_back();
+	std::vector<long long> operands;
+	long long total{ 0 };
+	for (size_t i = lines[0].length() - 1; i >= 0 && i < lines[0].length(); --i) {
+		// Build number
+		std::stringstream numberStream;
+		for (auto problemLine : lines) {
+			numberStream << problemLine[i];
+		}
+		std::string operandString;
+		numberStream >> operandString;
+		operands.push_back(std::atoll(operandString.c_str()));
+
+		if (operatorLine[i] != ' ') {
+			long long result{ 0 };
+			if (operatorLine[i] == '*') {
+				result = 1;
+				for (auto operand : operands) {
+					result *= operand;
+				}
+			}
+			else if (operatorLine[i] == '+') {
+				for (auto operand : operands) {
+					result += operand;
+				}
+			}
+			total += result;
+			// Skip next column (it's an empty space)
+			--i;
+			// Clear operands to begin prep for next problem
+			operands.clear();
+		}
+	}
+	return total;
 }

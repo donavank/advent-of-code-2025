@@ -144,12 +144,12 @@
     <Text Include="batteries.txt" />
     <Text Include="ingredients-test.txt" />
     <Text Include="ingredients.txt" />
+    <Text Include="math-problems-test.txt" />
     <Text Include="math-problems.txt" />
     <Text Include="paper-rolls-test.txt" />
     <Text Include="paper-rolls.txt" />
     <Text Include="product-id-ranges-test.txt" />
     <Text Include="product-id-ranges.txt" />
-    <Text Include="Resource Files\math-problems-test.txt" />
     <Text Include="rotations-test.txt" />
   </ItemGroup>
   <ItemGroup>
